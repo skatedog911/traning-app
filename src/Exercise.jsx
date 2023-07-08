@@ -32,19 +32,8 @@ function Exercise() {
 
   const handleSets = (e, setId) => {
     const newSets = sets.map((s) => {
-      if (s.setId === setId) {
-        return {
-          setId: s.setId,
-          weight: e.target.value,
-          times: s.times,
-        };
-      } else {
-        return s;
-      }
+      return s.setId === setId ? { ...s, weight: e.target.value } : s;
     });
-    console.log(e);
-    console.log(setId);
-    console.log(newSets);
 
     setSets(newSets);
   };
