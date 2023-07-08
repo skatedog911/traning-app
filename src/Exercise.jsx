@@ -1,8 +1,6 @@
 import "./Exercise.css";
 import React, { useState } from "react";
-
-// サンプルデータ
-const weights = [10, 20, 30, 40, 50, 60, 70, 80, 90];
+import Set from "./Set";
 
 const exercise = {
   type: "ベンチプレス",
@@ -30,39 +28,38 @@ function Exercise() {
 
   const [sets, setSets] = useState(initSets);
 
-  const handleSets = (e, setId) => {
-    const newSets = sets.map((s) => {
-      return s.setId === setId ? { ...s, weight: e.target.value } : s;
-    });
+  const addSet = () => {
+    let newSet = { ...sets[sets.length - 1] };
+    newSet.setId += 1;
 
-    setSets(newSets);
+    console.log([...sets, newSet]);
+    setSets([...sets, newSet]);
+  };
+
+  const deleteSet = (setId) => {
+    console.log(setId);
+    setSets(
+      sets.filter((s) => {
+        return s.setId !== setId;
+      })
+    );
   };
 
   return (
     <div>
       <div>{type}</div>
       <div>
-        {sets.map(({ setId, weight, times }) => {
+        {sets.map((set) => {
           return (
-            <div className="set" key={setId}>
-              <div>
-                <select value={weight} onChange={(e) => handleSets(e, setId)}>
-                  {weights.map((w) => {
-                    return (
-                      <option key={w} value={w}>
-                        {w}
-                      </option>
-                    );
-                  })}
-                </select>
-              </div>
-              <div>{times}回</div>
-              <div>
-                <button>削除</button>
-              </div>
+            <div>
+              <Set {...set}></Set>
+              <button onClick={() => deleteSet(set.setId)}>削除</button>
             </div>
           );
         })}
+      </div>
+      <div>
+        <button onClick={addSet}>追加</button>
       </div>
     </div>
   );
