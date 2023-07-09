@@ -1,6 +1,8 @@
 import "./Exercise.css";
 import React, { useState } from "react";
 import Set from "./Set";
+import { Button } from "@mui/material";
+import Grid from "@mui/material/Unstable_Grid2";
 
 const exercise = {
   type: "ベンチプレス",
@@ -31,13 +33,10 @@ function Exercise() {
   const addSet = () => {
     let newSet = { ...sets[sets.length - 1] };
     newSet.setId += 1;
-
-    console.log([...sets, newSet]);
     setSets([...sets, newSet]);
   };
 
   const deleteSet = (setId) => {
-    console.log(setId);
     setSets(
       sets.filter((s) => {
         return s.setId !== setId;
@@ -46,22 +45,26 @@ function Exercise() {
   };
 
   return (
-    <div>
-      <div>{type}</div>
-      <div>
+    <Grid
+      sx={{
+        backgroundColor: "gainsboro",
+        p: 2,
+        m: 4,
+        borderRadius: 2,
+      }}
+    >
+      <Grid sm={12}>{type}</Grid>
+      <Grid sm={12} sx={{ pt: 1, pb: 1 }}>
         {sets.map((set) => {
-          return (
-            <div>
-              <Set {...set}></Set>
-              <button onClick={() => deleteSet(set.setId)}>削除</button>
-            </div>
-          );
+          return <Set key={set.setId} {...set} deleteSets={deleteSet}></Set>;
         })}
-      </div>
-      <div>
-        <button onClick={addSet}>追加</button>
-      </div>
-    </div>
+      </Grid>
+      <Grid sm={12}>
+        <Button variant="contained" onClick={addSet} fullWidth color="info">
+          ADD SET
+        </Button>
+      </Grid>
+    </Grid>
   );
 }
 

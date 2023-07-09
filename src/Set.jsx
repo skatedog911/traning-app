@@ -1,9 +1,27 @@
 import React, { useState } from "react";
+import Grid from "@mui/material/Unstable_Grid2";
+import DeleteIcon from "@mui/icons-material/Delete";
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
+import {
+  Button,
+  FormControl,
+  IconButton,
+  InputLabel,
+  MenuItem,
+  Select,
+  Typography,
+} from "@mui/material";
 
 // サンプルデータ
 const weights = [10, 20, 30, 40, 50, 60, 70, 80, 90];
 
-function Set({ setId, weight: initialWeight, times: initialTimes }) {
+function Set({
+  setId,
+  weight: initialWeight,
+  times: initialTimes,
+  deleteSets,
+}) {
   const [weight, setWeight] = useState(initialWeight);
   const [times, setTimes] = useState(initialTimes);
 
@@ -21,26 +39,58 @@ function Set({ setId, weight: initialWeight, times: initialTimes }) {
   };
 
   return (
-    <div className="set" key={setId}>
-      <div>
-        <select value={weight} onChange={changeWeight}>
-          {weights.map((w) => {
-            return (
-              <option key={w} value={w}>
-                {w}
-              </option>
-            );
-          })}
-        </select>
-      </div>
-      <div>{times}回</div>
-      <div>
-        <button onClick={decTimes}>-</button>
-      </div>
-      <div>
-        <button onClick={incTimes}>+</button>
-      </div>
-    </div>
+    <Grid
+      container
+      key={setId}
+      spacing={2}
+      alignItems="center"
+      justifyContent="center"
+      textAlign="center"
+      sx={{
+        backgroundColor: "whitesmoke",
+        borderRadius: "10px",
+        m: 1,
+      }}
+    >
+      <Grid sm={3}>
+        <FormControl fullWidth>
+          <InputLabel>Weight</InputLabel>
+          <Select value={weight} onChange={changeWeight} label="Weight">
+            {weights.map((w) => {
+              return (
+                <MenuItem key={w} value={w}>
+                  {w}
+                </MenuItem>
+              );
+            })}
+          </Select>
+        </FormControl>
+      </Grid>
+      <Grid sm={1}>
+        <Typography>kg</Typography>
+      </Grid>
+      <Grid sm={2}>{times}回</Grid>
+      <Grid sm={1}>
+        <IconButton aria-label="decriment" onClick={decTimes} color="primary">
+          <RemoveCircleOutlineIcon />
+        </IconButton>
+      </Grid>
+      <Grid sm={1}>
+        <IconButton aria-label="increment" onClick={incTimes} color="primary">
+          <AddCircleOutlineIcon />
+        </IconButton>
+      </Grid>
+      <Grid sm={4}>
+        <Button
+          variant="outlined"
+          color="error"
+          startIcon={<DeleteIcon />}
+          onClick={() => deleteSets(setId)}
+        >
+          DELETE
+        </Button>
+      </Grid>
+    </Grid>
   );
 }
 
