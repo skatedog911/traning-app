@@ -4,30 +4,7 @@ import Set from "./Set";
 import { Button } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2";
 
-const exercise = {
-  type: "ベンチプレス",
-  sets: [
-    {
-      setId: 1,
-      weight: 60,
-      times: 10,
-    },
-    {
-      setId: 2,
-      weight: 70,
-      times: 10,
-    },
-    {
-      setId: 3,
-      weight: 80,
-      times: 10,
-    },
-  ],
-};
-
-function Exercise() {
-  const { type, sets: initSets } = exercise;
-
+function Exercise({ type, sets: initSets }) {
   const [sets, setSets] = useState(initSets);
 
   const addSet = () => {
