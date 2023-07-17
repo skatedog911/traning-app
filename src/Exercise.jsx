@@ -4,13 +4,25 @@ import Set from "./Set";
 import { Button } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2";
 
+const defaultSets = [
+  {
+    setId: 1,
+    weight: 10,
+    times: 1,
+  },
+];
+
 function Exercise({ type, sets: initSets }) {
   const [sets, setSets] = useState(initSets);
 
   const addSet = () => {
-    let newSet = { ...sets[sets.length - 1] };
-    newSet.setId += 1;
-    setSets([...sets, newSet]);
+    if (sets.length === 0) {
+      setSets(defaultSets);
+    } else {
+      let newSet = { ...sets[sets.length - 1] };
+      newSet.setId += 1;
+      setSets([...sets, newSet]);
+    }
   };
 
   const deleteSet = (setId) => {
